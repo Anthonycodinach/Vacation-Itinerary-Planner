@@ -36,6 +36,16 @@ query allItineraries {
 }
 `;
 
+export const QUERY_ONE_ITINERARY = gql`
+  query singleProfile($profileId: ID! $itineraryId: ID!) {
+    profile(profileId: $profileId) {
+      _id
+      name
+      skills
+    }
+  }
+`;
+
 export const GET_ITINERARIES = gql`
   query getItineraries($userId: ID!) {
     itineraries(userId: $userId) {
