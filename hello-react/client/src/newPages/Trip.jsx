@@ -5,6 +5,15 @@ import caretRight from './assets/Icons/caretRight.svg'
 import miami from './assets/cityImages/Miami.jpg'
 import { useParams } from "react-router-dom"
 import x from './assets/Icons/X.svg'
+import naples from './assets/cityImages/Naples.jpg'
+import botanical from './assets/Images/naples/botanicalGardens.png'
+import campiellos from './assets/Images/naples/campiellos.jpeg'
+import historic from './assets/Images/naples/historic.jpg'
+import rookeryBay from './assets/Images/naples/rookeryBay.jpg'
+import sunsetCruise from './assets/Images/naples/sunsetCruise.jpg'
+import theBayHouse from './assets/Images/naples/theBayHouse.jpg'
+import theTurtleClub from './assets/Images/naples/theTurtleClub.jpg'
+import vanderbiltBeach from './assets/Images/naples/vanderbiltBeach.jpg'
 
 
 // function Trip() { 
@@ -16,7 +25,24 @@ import property from '../components/API';
 import SearchForm from '../components/Search/SearchForm';
 import { loadStripe } from '@stripe/stripe-js';
 import { useMutation, gql } from '@apollo/client';
-import {ADD_AIRBNB_TO_ITINERARY} from '../../src/utils/mutations'
+import { ADD_AIRBNB_TO_ITINERARY } from '../../src/utils/mutations'
+
+function ItemHolder(props) {
+    return (
+        <div className='itemHolderContainer'>
+            <img className='itemHolderImage' src={props.image}></img>
+            <div className='itemHolderText'>
+                <h1 className="itemHolderSubText" >{props.line1}</h1>
+                <p className='itemHolderSubText' >{props.line2}</p>
+                <p className='itemHolderSubText' >{props.line3}</p>
+                <button
+                    className='itemHolderButton'
+                > Remove
+                </button>
+            </div>
+        </div>
+    )
+}
 
 const Trip = () => {
 
@@ -26,7 +52,7 @@ const Trip = () => {
     const stripePromise = loadStripe("pk_test_51Nr12cG3HMx6NAFGYTqkC7ydc1MpCyK3OHCJZdsxYWQks9aYqneBjhpNKxxifgY2ZbJIdcNHDgfTG0uMisXWM4zS008wp3C3xw");
 
     const payment = async (event) => {
-        
+
         console.log('Payment function called.');
         const stripe = await stripePromise;
         const { error } = await stripe.redirectToCheckout({
@@ -38,9 +64,9 @@ const Trip = () => {
             successUrl: 'http://localhost:3000/profile/trip#',
             cancelUrl: 'http://localhost:3000',
         });
-    
+
     };
-    
+
 
 
     //function 
@@ -86,22 +112,22 @@ const Trip = () => {
             searchProperty(query);
         };
 
-        const payment = () => {}
+        const payment = () => { }
 
         const handleFormAdd = (e) => {
             e.preventDefault()
             setlistingId(e.target.value);
             console.log(listingId);
 
-            
+
 
             airbnbValues({
                 variables: {
-                _id: 1234,
-                guests: query.people,
-                airbnbName: query.name,
-                airbnbCheckInDate: query.startDate,
-                airbnbCheckOutDate: query.endDate
+                    _id: 1234,
+                    guests: query.people,
+                    airbnbName: query.name,
+                    airbnbCheckInDate: query.startDate,
+                    airbnbCheckOutDate: query.endDate
                 }
             })
 
@@ -135,7 +161,7 @@ const Trip = () => {
                                 {listing ? (
                                     <PropertyDetail
                                         list={homes}
-                                    handleFormAdd = { handleFormAdd }
+                                        handleFormAdd={handleFormAdd}
                                     />
                                 ) : (
                                     <h3>Pending Results</h3>
@@ -267,7 +293,7 @@ const Trip = () => {
 
     }
     return (
-        
+
         <>
             <CreateActivity></CreateActivity>
             <CreateRestaurant></CreateRestaurant>
@@ -300,14 +326,14 @@ const Trip = () => {
                         </MenuSideBarItem>
                         <MenuSideBarItem
                             title="Budget"
-                            
+
                         >
                             <p>Expenses</p>
                         </MenuSideBarItem>
                     </div>
                     <div className='menuMainInfo'>
                         <div className='menuMainInfoImageContainer'>
-                            <img src={miami} className='menuMainInfoImage'></img>
+                            <img src={naples} className='menuMainInfoImage'></img>
                             <div className='menuMainInfoImageCard'>
 
                                 <h1>Trip To Naples</h1>
@@ -322,23 +348,82 @@ const Trip = () => {
                             <MenuMainOverviewItem
                                 title="Restaurants"
                             >
-                                <button className='addNewAccomodationsButton' onClick={() => { setRestaurantModalIsOpen((prevState) => !prevState) }}>Add New Restaurants</button>
+                                <ItemHolder
+                                    image={theBayHouse}
+                                    line1='The Bay House'
+                                    line2='$$$ - Seafood restaurant'
+                                    line3='Dinner at 7:30'
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={theTurtleClub}
+                                    line1='The Turtle Club'
+                                    line2='$$$ - Restaurant'
+                                    line3='Dinner at 7:00'
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={campiellos}
+                                    line1='Campiello'
+                                    line2='$$$ - Italian restaurant'
+                                    line3='Dinner at 6:45'
+                                >
+                                </ItemHolder>
+
                             </MenuMainOverviewItem>
+                            <button className='addNewAccomodationsButton' onClick={() => { setRestaurantModalIsOpen((prevState) => !prevState) }}>Add New Restaurants</button>
                         </div>
                         <div className='menuMainInfoItem'>
                             <MenuMainOverviewItem
                                 title="Activities"
                             >
-                                <button className='addNewAccomodationsButton' onClick={() => { setActivityModalIsOpen((prevState) => !prevState) }}>Add New Activities</button>
+                                <ItemHolder
+                                    image={historic}
+                                    line1='Explore Historic District'
+                                    line2="A delightful fusion of Old Florida charm, upscale boutiques, and gourmet dining."
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={botanical}
+                                    line1='Naples Botanical Gardens'
+                                    line2='A captivating oasis of diverse plant collections and serene pathways in Naples, Florida.'
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={sunsetCruise}
+                                    line1='Sunset Cruise'
+                                    line2='Offering mesmerizing Gulf of Mexico views as the sun sets, creating a memorable and romantic experience.'
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={rookeryBay}
+                                    line1='Rookery Bay Reserve'
+                                    line2='A coastal sanctuary known for its diverse ecosystems and abundant wildlife.'
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={vanderbiltBeach}
+                                    line1='Vanderbilt Beach'
+                                    line2='A popular Gulf of Mexico spot with soft white sands and clear waters for relaxation.'
+                                >
+                                </ItemHolder>
                             </MenuMainOverviewItem>
+                            <button className='addNewAccomodationsButton' onClick={() => { setActivityModalIsOpen((prevState) => !prevState) }}>Add New Activities</button>
                         </div>
                         <div className='menuMainInfoItem'>
                             <MenuMainOverviewItem
                                 title="Accomodations"
                             >
-                                <button className='addNewAccomodationsButton' onClick={() => { setModalIsOpen((prevState) => !prevState) }}>Add New Accomodations</button>
-                                <button className='addNewAccomodationsButton' onClick={payment}>Pay for Accomodations</button>
+                                <ItemHolder
+                                    image={naples}
+                                    line1='Big House'
+                                    line2='Naples'
+                                    line3='Free'
+                                >
+                                </ItemHolder>
+                                <button className='payAccomodationsButton' onClick={payment}>Pay for Accomodations</button>
                             </MenuMainOverviewItem>
+                            <button className='addNewAccomodationsButton' onClick={() => { setModalIsOpen((prevState) => !prevState) }}>Add New Accomodations</button>
                         </div>
                         <div className='menuMainInfoItemShaded'>
                             <h1 className='menuMainInfoTitle'>Itinerary</h1>
@@ -347,10 +432,25 @@ const Trip = () => {
                             <MenuMainOverviewItem
                                 title="Day 1"
                             >
-                                <p>9:15 Massage</p>
-                                <p>1:00 Lunch</p>
-                                <p>3:00 Homework</p>
-
+                                <ItemHolder
+                                    image={vanderbiltBeach}
+                                    line1='Vanderbilt Beach'
+                                    line2='A popular Gulf of Mexico spot with soft white sands and clear waters for relaxation.'
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={rookeryBay}
+                                    line1='Rookery Bay Reserve'
+                                    line2='A coastal sanctuary known for its diverse ecosystems and abundant wildlife.'
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={theBayHouse}
+                                    line1='The Bay House'
+                                    line2='$$$ - Seafood restaurant'
+                                    line3='Dinner at 7:30'
+                                >
+                                </ItemHolder>
 
                             </MenuMainOverviewItem>
                         </div>
@@ -358,18 +458,45 @@ const Trip = () => {
                             <MenuMainOverviewItem
                                 title="Day 2"
                             >
-                                <a>
-                                    <p>Restaurants</p>
-                                </a>
+                                <ItemHolder
+                                    image={historic}
+                                    line1='Explore Historic District'
+                                    line2="A delightful fusion of Old Florida charm, upscale boutiques, and gourmet dining."
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={botanical}
+                                    line1='Naples Botanical Gardens'
+                                    line2='A captivating oasis of diverse plant collections and serene pathways in Naples, Florida.'
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={theTurtleClub}
+                                    line1='The Turtle Club'
+                                    line2='$$$ - Restaurant'
+                                    line3='Dinner at 7:00'
+                                >
+                                </ItemHolder>
+
                             </MenuMainOverviewItem>
                         </div>
                         <div className='menuMainInfoItem'>
                             <MenuMainOverviewItem
                                 title="Day 3"
                             >
-                                <a>
-                                    <p>Restaurants</p>
-                                </a>
+                                <ItemHolder
+                                    image={sunsetCruise}
+                                    line1='Sunset Cruise'
+                                    line2='Offering mesmerizing Gulf of Mexico views as the sun sets, creating a memorable and romantic experience.'
+                                >
+                                </ItemHolder>
+                                <ItemHolder
+                                    image={campiellos}
+                                    line1='Campiello'
+                                    line2='$$$ - Italian restaurant'
+                                    line3='Dinner at 6:45'
+                                >
+                                </ItemHolder>
                             </MenuMainOverviewItem>
                         </div>
                         <div className='menuMainInfoItemShaded'>

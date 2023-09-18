@@ -22,8 +22,8 @@
 }
 
 .overviewMap {
-    background-image: url(./assets/Images/fakeMap.png);
-    background-size: 100% 100%;
+    background-image: url(./assets/Images/googleMapsNaples.png);
+    background-size: 120% 100%;
     object-fit: cover;
     width: 40vw;
     border-top: 1px solid var(--bgAccent);
@@ -153,8 +153,9 @@
 
 
 .menuMainInfoItem {
-    padding: 4vw;
+    padding: 2vw 4vw;
     display: flex;
+    position: relative;
 }
 
 .extraMargin {
@@ -166,8 +167,19 @@
 } */
 
 .addNewAccomodationsButton {
-    margin: 1vw;
-    margin-top: 3vw;
+    margin: 0;
+    white-space: nowrap;
+    height: 3vw;
+    width: 15vw;
+    position: absolute;
+    right: 5vw;
+}
+
+.payAccomodationsButton {
+    white-space: nowrap;
+    height: 3vw;
+    width: 15vw;
+    margin: 0;
 }
 
 .createNewTripAccomodation {
@@ -220,4 +232,42 @@
 .airbnbListingButton {
     margin: 0;
     width: 50%;
+}
+
+.itemHolderSubText {
+    padding: 0.5vw;
+}
+
+.itemHolderContainer {
+    display: flex;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    width: 100%;
+    border-bottom: solid 1px var(--bg2);
+}
+
+.itemHolderText {
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%
+}
+
+.itemHolderImage {
+    border: solid 5px var(--textColorDark);
+    border-radius: 50%;
+    object-fit: cover;
+    width: 10vw;
+    height: 10vw;
+}
+
+.itemHolderButton {
+    margin: 0;
+    white-space: nowrap;
+    width: min-content;
+    padding: .7vw;
+    font-size: .7vw;
+    margin-left: auto;
+    margin-top: auto;
 }
