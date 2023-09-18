@@ -14,6 +14,7 @@ import Signup from './newPages/SignUp';
 import Header from './newPages/Header';
 import Footer from './newPages/Footer';
 import Trip from './newPages/Trip';
+import Trip1 from './newPages/Trip1';
 import Create from './pages/Create';
 
 const httpLink = createHttpLink({
@@ -62,12 +63,16 @@ function App() {
                 element={<Trip />}
               />
               <Route
+                path="/profile/trip1"
+                element={<Trip1 />}
+              />
+              <Route
                 path="/create"
                 element={<Create />}
               />
               <Route
-                path="profile/trip/:id" element={<Trip />} 
-                />
+                path="profile/trip/:id" element={<Trip />}
+              />
             </Routes>
           </div>
           <Footer />

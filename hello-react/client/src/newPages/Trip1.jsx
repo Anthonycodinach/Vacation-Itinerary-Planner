@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import './Trip.css'
+import './Trip1.css'
 import caret from './assets/Icons/caret.svg'
 import caretRight from './assets/Icons/caretRight.svg'
-import miami from './assets/cityImages/Miami.jpg'
 import { useParams } from "react-router-dom"
 import x from './assets/Icons/X.svg'
 import naples from './assets/cityImages/Naples.jpg'
@@ -15,6 +14,7 @@ import theBayHouse from './assets/Images/naples/theBayHouse.jpg'
 import theTurtleClub from './assets/Images/naples/theTurtleClub.jpg'
 import vanderbiltBeach from './assets/Images/naples/vanderbiltBeach.jpg'
 import naplesHouse from './assets/Images/naples/naplesHouse.png'
+import nyc from './assets/cityImages/NewYorkCity.jpg'
 
 
 // function Trip() { 
@@ -26,7 +26,7 @@ import property from '../components/API';
 import SearchForm from '../components/Search/SearchForm';
 import { loadStripe } from '@stripe/stripe-js';
 import { useMutation, gql } from '@apollo/client';
-import { ADD_AIRBNB_TO_ITINERARY } from '../../src/utils/mutations'
+import { ADD_AIRBNB_TO_ITINERARY } from '../utils/mutations'
 
 function ItemHolder(props) {
     return (
@@ -45,7 +45,7 @@ function ItemHolder(props) {
     )
 }
 
-const Trip = () => {
+const Trip1 = () => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [activityModalIsOpen, setActivityModalIsOpen] = useState(false)
@@ -334,11 +334,11 @@ const Trip = () => {
                     </div>
                     <div className='menuMainInfo'>
                         <div className='menuMainInfoImageContainer'>
-                            <img src={naples} className='menuMainInfoImage'></img>
+                            <img src={nyc} className='menuMainInfoImage'></img>
                             <div className='menuMainInfoImageCard'>
 
-                                <h1>Trip To Naples</h1>
-                                <p>From 9/22/2023 To 9/24/2023</p>
+                                <h1>Trip To New York City</h1>
+                                <p>From 10/26/2023 To 11/4/2023</p>
                                 <p className='menuMainInfoImageCardGuests'>Two Guests</p>
 
                             </div>
@@ -513,7 +513,7 @@ const Trip = () => {
 
                     </div>
                 </div>
-                <div className='overviewMapNaples shadowElement'>
+                <div className='overviewMap shadowElement'>
 
                 </div>
             </div>
@@ -522,4 +522,4 @@ const Trip = () => {
 
 }
 
-export default Trip;
+export default Trip1;

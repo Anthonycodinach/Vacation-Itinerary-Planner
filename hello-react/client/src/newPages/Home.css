@@ -118,7 +118,7 @@ button:hover {
 .suggestedTripCard h2 {
     position: absolute;
     font-weight: 300;
-    bottom: 1vw;
+    bottom: 2.3vw;
     left: 2vw;
     color: var(--bg);
     background-color: var(--textColorDark);

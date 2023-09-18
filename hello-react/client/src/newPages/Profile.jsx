@@ -8,6 +8,7 @@ import nyc from './assets/cityImages/NewYorkCity.jpg'
 import chicago from './assets/cityImages/Chicago.jpg'
 import atlanta from './assets/cityImages/Atlanta.jpg'
 import x from './assets/Icons/X.svg'
+import anthony from './assets/Images/anthony.jpg'
 
 import Create from '../pages/Create';
 
@@ -20,7 +21,7 @@ function Trip(props) {
             <div class="profileTripOverview">
                 <h1 className='zoom'>{props.city}</h1>
                 <h2>{props.date}</h2>
-                <p class="profileTripAbout">Add Comments!</p>
+                {/* <p class="profileTripAbout">Add Comments!</p> */}
             </div>
         </div>
     )
@@ -62,12 +63,11 @@ function Profile() {
             <div className='profileMain'>
                 <div className='profileCategory'>
                     <div className='profileImageContainer'>
-                        <img className='profileImage'></img>
+                        <img className='profileImage' src={anthony}></img>
                     </div>
                     <div className='profileItem'>
                         <h1>Anthony</h1>
-                        <h2>About me!</h2>
-                        <p>Hi my name is Anthony, I have a cat and I like to code!</p>
+                        <p className="profileBio">I'm Anthony, a web developer and avid traveler, always seeking new horizons to explore. By day, I work my magic with code, crafting user-friendly websites. But when I'm not in front of the screen, you'll often find me planning my next adventure, fueled by a passion for discovering new places. And of course, my trusty cat is my companion in both work and wanderlust. Join me on my journey to create memorable vacations through the world of web development!</p>
                     </div>
                 </div>
                 <div className='profileCategory border'>
@@ -85,7 +85,7 @@ function Profile() {
                     </div>
                     <div class="profileItem">
                         <h2>Total Trips</h2>
-                        <p>All</p>
+                        <p>4 Trips</p>
                     </div>
                 </div>
 
@@ -96,8 +96,8 @@ function Profile() {
 
 
                 <div className='tripsContainer border'>
-                    <Trip city='New York City' cityImage={nyc} date="Jul 20th - Jul 30th"></Trip>
-                    <Trip city='Chicago' cityImage={chicago} date="Sep 25th - Sep 27th"></Trip>
+                    <Trip city='New York City' cityImage={nyc} date="Oct 26th - Nov 4th"></Trip>
+                    <Trip city='Chicago' cityImage={chicago} date="Oct 5th - Oct 9th"></Trip>
                 </div>
 
                 <h1 className='subTitle'>Previous Trips</h1>

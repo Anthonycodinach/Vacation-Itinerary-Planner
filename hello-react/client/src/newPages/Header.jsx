@@ -17,8 +17,8 @@ function Header() {
   return (
     <>
       <NavBar>
-        <NavItem className='navItem' link='#' icon={bookIcon}></NavItem>
-        <p className='navSubTitle'>Guides</p>
+        {/* <NavItem className='navItem' link='#' icon={bookIcon}></NavItem>
+        <p className='navSubTitle'>Guides</p> */}
         <NavItem className='navItem isDropdown' className1='isDropdown' icon={worldIcon}>
 
             <DropdownMenu></DropdownMenu>
@@ -26,7 +26,7 @@ function Header() {
         </NavItem>
         <p className='navSubTitle'>Trips</p>
         <NavItem className='navItem' link="/profile" icon={profileIcon}></NavItem>
-        <a href="/signup" className='navSubTitle'>Sign Up</a>
+        <a href="/signup" className='navSubTitle'>Profile</a>
 
       </NavBar>
     </>
@@ -46,7 +46,7 @@ function DropdownMenu() {
   function DropdownItem(props) {
     if (props.title === "true") {
       return (
-        <a href="#" className='isDropdown menuItem' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+        <a href={props.link} className='isDropdown menuItem' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
           <span className='iconButton dropdownTitle isDropdown'>
             <img className='isDropdown' src={props.leftIcon}></img>
           </span>
@@ -57,7 +57,7 @@ function DropdownMenu() {
     }
 
     return (
-      <a href="#" className='isDropdown menuItem' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+      <a href={props.link} className='isDropdown menuItem' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
         <span className='iconButton isDropdown'>
           <img className='isDropdown' src={props.leftIcon}></img>
         </span>
@@ -84,13 +84,15 @@ function DropdownMenu() {
 
         <div className='menu isDropdown'>
           <DropdownItem
-            leftIcon={mapIcon}>
+            leftIcon={mapIcon}
+            link='#'>
             <p className='isDropdown'>Plan a Trip</p>
           </DropdownItem>
 
           <DropdownItem
             leftIcon={tripsIcon}
-            goToMenu='settings'>
+            goToMenu='settings'
+            link='#'>
             <p className='isDropdown'>Saved Trips</p>
           </DropdownItem>
         </div>
@@ -109,28 +111,27 @@ function DropdownMenu() {
           <DropdownItem
             leftIcon={chevronIcon}
             goToMenu='main'
-            title="true">
+            title="true"
+            link='#'>
             <h1 className='isDropdown'>Saved Trips</h1>
           </DropdownItem>
+          {/* <DropdownItem
+            leftIcon={cityIcon}
+            link='/profile/trip'>
+            <p className='isDropdown'>Naples</p>
+          </DropdownItem> */}
           <DropdownItem
-            leftIcon={cityIcon}>
-            <p className='isDropdown'>New York City</p>
+            leftIcon={cityIcon}
+            link='/profile/trip1'>
+            <p className='isDropdown'>New York</p>
           </DropdownItem>
-          <DropdownItem
-            leftIcon={cityIcon}>
-            <p className='isDropdown'>Miami</p>
-          </DropdownItem>
-          <DropdownItem
+          {/* <DropdownItem
             leftIcon={cityIcon}>
             <p className='isDropdown'>San Francisco</p>
-          </DropdownItem>
+          </DropdownItem> */}
           <DropdownItem
             leftIcon={cityIcon}>
             <p className='isDropdown'>Chicago</p>
-          </DropdownItem>
-          <DropdownItem
-            leftIcon={cityIcon}>
-            <p className='isDropdown'>Atlanta</p>
           </DropdownItem>
         </div>
 

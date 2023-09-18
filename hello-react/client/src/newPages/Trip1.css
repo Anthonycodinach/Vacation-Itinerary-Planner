@@ -21,10 +21,10 @@
     border-bottom: 1px solid var(--bgAccent);
 }
 
-.overviewMapNaples {
-    background-image: url(./assets/Images/googleMapsNaples.png);
+.overviewMap {
+    background-image: url(./assets/Images/googleMapsNYC.png);
     background-size: 120% 100%;
-    object-fit: contain;
+    object-fit: cover;
     width: 40vw;
     border-top: 1px solid var(--bgAccent);
 }

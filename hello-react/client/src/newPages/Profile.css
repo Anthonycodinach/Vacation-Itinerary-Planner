@@ -181,3 +181,11 @@
     margin: 0;
     margin-top: 2vw;
 }
+
+.modalFormInputButton a {
+    color: var(--bg3);
+}
+
+.profileBio {
+    line-height: 2;
+}

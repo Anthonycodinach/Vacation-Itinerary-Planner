@@ -79,7 +79,9 @@ const Create = ({ }) => {
           </div>
           <div className="modalFormInputContainer">
             <button className="modalFormInputButton" type="submit">
-              Create your perfect trip itinerary
+              <a href='/profile/trip'>
+                Create your perfect trip itinerary
+              </a>
             </button>
           </div>
         </div>
