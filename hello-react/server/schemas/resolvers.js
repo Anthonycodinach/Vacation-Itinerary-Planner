@@ -87,11 +87,11 @@ const resolvers = {
       return itinerary;
     },
 
-    addAirbnbToItinerary: async (parent, {_id, airbnbId, airbnbphoto, airbnbname, airbnbCheckInDate, airbnbCheckOutDate, airbnbguests} ) => {
+    addAirbnbToItinerary: async (parent, {_id, airbnbId, airbnbphoto, airbnbname, airbnbCheckInDate, airbnbCheckOutDate, airbnbguests, airbnbprice} ) => {
       const itinerary = await Itinerary.findOneAndUpdate(
         { _id: _id },
         {
-          $set: { airbnbId: airbnbId, airbnbphoto: airbnbphoto, airbnbname: airbnbname, airbnbCheckInDate: airbnbCheckInDate, airbnbCheckOutDate: airbnbCheckOutDate, airbnbguests: airbnbguests},
+          $set: { airbnbId: airbnbId, airbnbphoto: airbnbphoto, airbnbname: airbnbname, airbnbCheckInDate: airbnbCheckInDate, airbnbCheckOutDate: airbnbCheckOutDate, airbnbguests: airbnbguests, airbnbprice: airbnbprice},
         },
         {
           new: true,

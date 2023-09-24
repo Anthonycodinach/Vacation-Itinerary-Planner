@@ -28,6 +28,7 @@ function PropertyDetail(props) {
               className='airbnbListingButton' 
               id={item.listing.id}
               addr={item.listing.contextualPictures[0].picture}
+              price={item.pricingQuote.structuredStayDisplayPrice.primaryLine.accessibilityLabel}
               name={item.listing.name}
               onClick={props.handleFormAdd}
               type="submit"

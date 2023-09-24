@@ -78,6 +78,7 @@ query getItineraryDetails($_id: ID!) {
     airbnbCheckInDate
     airbnbCheckOutDate
     airbnbguests
+    airbnbprice
     restaurants
     experiences
     }

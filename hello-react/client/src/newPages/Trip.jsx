@@ -26,7 +26,6 @@ const AirbnbAccommodation = (props) => {
 
     return (
         <div class="tripsItem">
-            {/* {accommodationList.map((item, index) => (  */}
             <div>
                 <div class="profileImageContainer">
                     <img 
@@ -38,10 +37,10 @@ const AirbnbAccommodation = (props) => {
                 <div class="profileTripOverview">
                     <h1 className='zoom' >{airbnbItem.location} </h1>
                     <h2 >{airbnbItem.airbnbname} </h2>
-                    <h2 >{airbnbItem.startDate} </h2>
+                    <h2 >Check In: {airbnbItem.startDate} </h2>
+                    <h2 >{airbnbItem.airbnbprice}</h2>
                 </div>
             </div>
-            {/* ))} */}
         </div>
     )
 }
@@ -52,7 +51,7 @@ const Trip = () => {
 
 
     const { id } = useParams();
-    // console.log('Itinerary '+id);
+    //console.log('Itinerary '+id);
     const { data } = useQuery(GET_ITINERARY_DETAILS, {
         variables: { _id: id },
     })
@@ -155,6 +154,7 @@ const Trip = () => {
                 _id: id,
                 airbnbId: e.target.id,
                 airbnbphoto: e.target.attributes.addr.value,
+                airbnbprice: e.target.attributes.price.value,
                 airbnbguests: people,
                 airbnbname: e.target.name,
                 airbnbCheckInDate: startDate,

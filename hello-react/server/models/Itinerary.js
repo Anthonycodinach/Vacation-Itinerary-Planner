@@ -57,6 +57,11 @@ const itinerarySchema = new Schema({
         required: false,
         trim: true,
     },
+    airbnbprice: {
+        type: String,
+        required: false,
+        trim: true,
+    },
     restaurants:[
         {
             type: Schema.Types.ObjectId,

@@ -22,6 +22,7 @@ const typeDefs = gql`
     airbnbCheckInDate: String
     airbnbCheckOutDate: String
     airbnbguests: Int
+    airbnbprice: String
     restaurants: [String]
     experiences: [String]
   }
@@ -85,6 +86,7 @@ const typeDefs = gql`
       airbnbCheckInDate: String,
       airbnbCheckOutDate: String,
       airbnbguests: Int
+      airbnbprice: String
     ): Itinerary
     deleteItinerary(itineraryId: ID!): Itinerary
     deleteRestaurant(restaurantId: ID!): Restaurants
