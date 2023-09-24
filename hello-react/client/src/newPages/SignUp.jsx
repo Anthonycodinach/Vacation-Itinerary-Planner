@@ -11,7 +11,12 @@ const Signup = () => {
     const [newUser, setnewUser] = useState({
         username: '',
         password: '',
-        email: 'shui@gmail.com'
+        email: ''
+    });
+
+    const [loginUser, setloginUser] = useState({
+        username: '',
+        password: '',
     });
 
     const [addUser] = useMutation(ADD_USER);
@@ -27,23 +32,20 @@ const Signup = () => {
         e.preventDefault();
         // console.log('Register Click');        
         try {
-            console.log(newUser);
+            //console.log(newUser);
             const { data } = await addUser({
               variables: { ...newUser },
               
             });
-        console.log(data);    
+        //console.log(data);    
         Auth.login(data.addUser.token);
-        Auth.login2(data.login.profile.username);
+        window.location.assign(`/Profile/${newUser.username}`);
         } 
         catch (e) { console.error(e);
         }
     }
 
-    const [loginUser, setloginUser] = useState({
-        username: '',
-        password: '',
-    });
+    
 
     const [userLogin, { error, data }] = useMutation(LOGIN_USER)
     
@@ -57,18 +59,18 @@ const Signup = () => {
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
-        console.log('Login Click')
+        //console.log('Login Click')
         try {
             const { data } = await userLogin({
               variables: { ...loginUser },
             });
-            console.log(data);
+            //console.log(data);
             Auth.login(data.login.token);
-            Auth.login2(data.login.profile.username);
-
+            
           } catch (e) {
             console.error(e);
           }
+          window.location.assign(`/Profile/${loginUser.username}`);
     }
 
     return (
@@ -130,12 +132,13 @@ const Signup = () => {
                             value={newUser.password}
                             />
                         </div>
+                        
                         <div className='formSub'>
                             <button 
                             className='formSubButton' 
                             type="submit"
-                            onClick = {handleSignUpSubmit}
-                            >Register</button>
+                            onClick = {handleSignUpSubmit}>Register
+                            </button>
                         </div>
                     </form>
                 </div>

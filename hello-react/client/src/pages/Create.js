@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_ITINERARY } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { useParams } from 'react-router-dom';
 
 
 const Create = ({ }) => {
@@ -13,9 +14,10 @@ const Create = ({ }) => {
 
   const [createItinerary, { error }] = useMutation(CREATE_ITINERARY);
 
+  const { username } = useParams();
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const username = Auth.getToken2();
     try {
       const data = await createItinerary({
         variables: { username: username, location: location, startDate: startDate, endDate: endDate, guests: parseInt(guests) },
@@ -31,6 +33,7 @@ const Create = ({ }) => {
     } catch (err) {
       console.error(err);
     }
+    window.location.reload();
   };
 
   return (

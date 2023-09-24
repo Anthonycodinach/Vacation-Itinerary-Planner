@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSwipeable } from "react-swipeable";
 import './Profile.css'
 import mapIcon from './assets/Icons/map.svg'
+import avatar from './assets/Images/peopleavatar.jpg'
 
 import miami from './assets/cityImages/Miami.jpg'
 import nyc from './assets/cityImages/NewYorkCity.jpg'
@@ -52,8 +53,8 @@ const Trip = (props) => {
 }
 
 const Profile = () => {
-    
-    const username = Auth.getToken2();
+
+    const { username } = useParams();
 
         const { data } = useQuery(GET_USER_ITINERARIES, {
             variables: { username: username },
@@ -95,7 +96,7 @@ const Profile = () => {
             <div className='profileMain'>
                 <div className='profileCategory'>
                     <div className='profileImageContainer'>
-                        <img className='profileImage'></img>
+                        <img className='profileImage' src={avatar}></img>
                     </div>
                     <div className='profileItem'>
                         <h1>{username}</h1>
@@ -131,7 +132,6 @@ const Profile = () => {
                 <div className='tripsContainer border'>
                     <Trip itineraryList = {itineraryList} 
                     />
-                    <Trip city='Chicago' cityImage={chicago} date="Sep 25th - Sep 27th"></Trip>
                 </div>
 
                 <h1 className='subTitle'>Previous Trips</h1>
