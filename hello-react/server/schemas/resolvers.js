@@ -4,8 +4,8 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    singleProfile: async (parent, { profileId }) => {
-      return Profile.findOne({ _id: profileId });
+    findProfile: async (parent, { username }) => {
+      return Profile.findOne({ username: username });
     },
     allProfiles: async () => {
       return Profile.find();
@@ -13,8 +13,11 @@ const resolvers = {
     allItineraries: async () => {
       return Itinerary.find();
     },
-    singleItinerary: async (parent, { itineraryId }) => {
-      return Itinerary.findOne({ _id: itineraryId });
+    userItinerary: async (parent, { username }) => {
+      return Itinerary.find({ username: username });
+    },
+    getItineraryDetails: async (parent, { _id }) => {
+      return Itinerary.findOne({ _id: _id });
     },
     // Query to get all restaurants in a specific location
     restaurantsByLocation: async (parent, { location }) => {
@@ -30,14 +33,16 @@ const resolvers = {
   },
 
   Mutation: {
-    createUser: async (parent, { username, email, password }) => {
+    addUser: async (parent, { username, email, password }) => {
       const profile = await Profile.create({ username, email, password });
       const token = signToken(profile);
 
       return { token, profile };
     },
-    login: async (parent, { email, password }) => {
-      const profile = await Profile.findOne({ email });
+
+
+    login: async (parent, { username, password }) => {
+      const profile = await Profile.findOne({ username });
 
       if (!profile) {
         throw new AuthenticationError('No profile with this email found!');
@@ -53,8 +58,8 @@ const resolvers = {
       return { token, profile };
     },
 
-    createItinerary: async (parent, { location, startDate, endDate, guests }) => {
-      const itinerary = await Itinerary.create({ location, startDate, endDate, guests });
+    createItinerary: async (parent, { username, location, startDate, endDate, guests }) => {
+      const itinerary = await Itinerary.create({ username, location, startDate, endDate, guests });
       return itinerary;
     },
 
@@ -82,11 +87,11 @@ const resolvers = {
       return itinerary;
     },
 
-    addAirbnbToItinerary: async (parent, {itineraryId, airbnbName, airbnbCheckInDate, airbnbCheckOutDate} ) => {
+    addAirbnbToItinerary: async (parent, {_id, airbnbId, airbnbphoto, airbnbname, airbnbCheckInDate, airbnbCheckOutDate, airbnbguests} ) => {
       const itinerary = await Itinerary.findOneAndUpdate(
-        { _id: itineraryId },
+        { _id: _id },
         {
-          $addToSet: { airbnbName: airbnbName, airbnbCheckInDate: airbnbCheckInDate, airbnbCheckOutDate: airbnbCheckOutDate },
+          $set: { airbnbId: airbnbId, airbnbphoto: airbnbphoto, airbnbname: airbnbname, airbnbCheckInDate: airbnbCheckInDate, airbnbCheckOutDate: airbnbCheckOutDate, airbnbguests: airbnbguests},
         },
         {
           new: true,

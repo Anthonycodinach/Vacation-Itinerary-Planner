@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function PropertyDetail(props) {
   let result = props.list;
+  const { id } = useParams();
 
   if (!props.list?.length) {
     return null;
@@ -9,6 +12,7 @@ function PropertyDetail(props) {
   } else { result = props.list.slice(1);
   console.log(result); }
 
+  
 
   return (
     <div className="text-center">
@@ -21,7 +25,10 @@ function PropertyDetail(props) {
             <p className='airbnbListingSubText' id={`cit-${index}`} key={`city-${index}`}>City: {item.listing.city}</p>
             <p className='airbnbListingSubText' id={`pri-${index}`} key={`price-${index}`}>Price: {item.pricingQuote.structuredStayDisplayPrice.primaryLine.accessibilityLabel}</p>
             <button
-              className='airbnbListingButton' value={item.listing.id}
+              className='airbnbListingButton' 
+              id={item.listing.id}
+              addr={item.listing.contextualPictures[0].picture}
+              name={item.listing.name}
               onClick={props.handleFormAdd}
               type="submit"
             > Add to Itinerary

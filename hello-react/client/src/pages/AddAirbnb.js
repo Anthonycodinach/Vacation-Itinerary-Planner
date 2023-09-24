@@ -32,8 +32,6 @@ const Create = ({ profileId }) => {
 
   return (
     <div>
-      <h4>Endorse some more skills below.</h4>
-
       {Auth.loggedIn() ? (
         <form
           className="flex-row justify-center justify-space-between-md align-center"
@@ -46,6 +44,12 @@ const Create = ({ profileId }) => {
               className="form-input w-100"
               onChange={(event) => setLocation(event.target.value)}
             />
+            <input
+              placeholder="Just you, or do you not have any friends?"
+              value={guests}
+              className="form-input w-100"
+              onChange={(event) => setGuests(event.target.value)}
+            />
              <input
               placeholder="When does it start?"
               value={startDate}
@@ -57,12 +61,6 @@ const Create = ({ profileId }) => {
               value={endDate}
               className="form-input w-100"
               onChange={(event) => setEndDate(event.target.value)}
-            />
-             <input
-              placeholder="Just you, or do you not have any friends?"
-              value={guests}
-              className="form-input w-100"
-              onChange={(event) => setGuests(event.target.value)}
             />
           </div>
 

@@ -6,19 +6,56 @@ import miami from './assets/cityImages/Miami.jpg'
 import { useParams } from "react-router-dom"
 import x from './assets/Icons/X.svg'
 
-
-// function Trip() { 
-//     let { id } = useParams();
-// }
-
 import PropertyDetail from '../components/propertyDetail';
 import property from '../components/API';
 import SearchForm from '../components/Search/SearchForm';
 import { loadStripe } from '@stripe/stripe-js';
 import { useMutation, gql } from '@apollo/client';
 import {ADD_AIRBNB_TO_ITINERARY} from '../../src/utils/mutations'
+import { GET_ITINERARY_DETAILS } from '../utils/queries';
+import { useQuery } from '@apollo/client';
+
+const AirbnbAccommodation = (props) => {
+    
+    const airbnbItem = props.accommodation;
+    console.log(airbnbItem);
+
+    if (!airbnbItem.airbnbname?.length) {
+        return null;
+    }
+
+    return (
+        <div class="tripsItem">
+            {/* {accommodationList.map((item, index) => (  */}
+            <div>
+                <div class="profileImageContainer">
+                    <img 
+                    class="profileImage zoom" 
+                    src={airbnbItem.airbnbphoto}
+                    key={(airbnbItem.airbnbId)}
+                    />
+                </div>
+                <div class="profileTripOverview">
+                    <h1 className='zoom' >{airbnbItem.location} </h1>
+                    <h2 >{airbnbItem.airbnbname} </h2>
+                    <h2 >{airbnbItem.startDate} </h2>
+                </div>
+            </div>
+            {/* ))} */}
+        </div>
+    )
+}
+
+
 
 const Trip = () => {
+
+
+    const { id } = useParams();
+    // console.log('Itinerary '+id);
+    const { data } = useQuery(GET_ITINERARY_DETAILS, {
+        variables: { _id: id },
+    })
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [activityModalIsOpen, setActivityModalIsOpen] = useState(false)
@@ -31,25 +68,23 @@ const Trip = () => {
         const stripe = await stripePromise;
         const { error } = await stripe.redirectToCheckout({
             lineItems: [{
-                price: "price_1NrX87G3HMx6NAFGnWWFABDm", // Replace with the ID of your price
+                price: "price_1NroUWG3HMx6NAFG0MVe6qg6", // Replace with the ID of your price
                 quantity: 5,
+
             }],
             mode: 'payment',
             successUrl: 'http://localhost:3000/profile/trip#',
-            cancelUrl: 'http://localhost:3000',
+            cancelUrl: 'http://localhost:3000/profile/trip#',
         });
     
     };
     
-
-
-    //function 
     const CreateTrip = () => {
 
         const [city, setCity] = useState('');
-        const [startDate, setstartDate] = useState(Date);
-        const [endDate, setendDate] = useState(Date);
-        const [people, setpeople] = useState(Number);
+        const [startDate, setstartDate] = useState('');
+        const [endDate, setendDate] = useState('');
+        const [people, setpeople] = useState('');
         const [listing, setListing] = useState();
         const [homes, setHomes] = useState();
 
@@ -62,23 +97,40 @@ const Trip = () => {
             people: ''
         }
 
+        
         const searchProperty = async (query) => {
             const response = await property(query)
             setListing(response)
             console.log(response)
             setHomes(response.data.homes);
-            console.log(homes);
+            console.log(response.data.homes);
         }
+
+        if (!data) {
+        } else {
+            if ( city  === '') {
+                setCity(data.getItineraryDetails.location);
+            }      
+            if ( people === '' ) {
+                setpeople(data.getItineraryDetails.guests);
+            }
+            if ( startDate === '' ) {
+                setstartDate(data.getItineraryDetails.startDate);
+            }
+            if ( endDate === '' ) {
+                setendDate(data.getItineraryDetails.endDate);
+            }}
 
         const handleInputChange_city = (e) => setCity(e.target.value);
         const handleInputChange_startDate = (e) => setstartDate(e.target.value);
         const handleInputChange_endDate = (e) => setendDate(e.target.value);
         const handleInputChange_people = (e) => setpeople(e.target.value);
+
         const [airbnbValues] = useMutation(ADD_AIRBNB_TO_ITINERARY);
 
         const handleFormSubmit = (e) => {
             e.preventDefault()
-            query.city = { city }
+            query.city =  { city } 
             query.startDate = { startDate }
             query.endDate = { endDate }
             query.people = { people }
@@ -86,28 +138,39 @@ const Trip = () => {
             searchProperty(query);
         };
 
-        const payment = () => {}
-
         const handleFormAdd = (e) => {
             e.preventDefault()
-            setlistingId(e.target.value);
-            console.log(listingId);
-
-            
+            // setlistingId(e.target.id);
+            // console.log(e);
+            // console.log(id);
+            // console.log(e.target.id);
+            // console.log(e.target.name);
+            // console.log(e.target.attributes.addr.value);
+            // console.log(people);
+            // console.log(startDate);
+            // console.log(endDate);
 
             airbnbValues({
                 variables: {
-                _id: 1234,
-                guests: query.people,
-                airbnbName: query.name,
-                airbnbCheckInDate: query.startDate,
-                airbnbCheckOutDate: query.endDate
+                _id: id,
+                airbnbId: e.target.id,
+                airbnbphoto: e.target.attributes.addr.value,
+                airbnbguests: people,
+                airbnbname: e.target.name,
+                airbnbCheckInDate: startDate,
+                airbnbCheckOutDate: endDate,
+                airbnbguests: people
                 }
             })
 
+            setModalIsOpen((prevState) => !prevState)
+            window.location.reload();
+            
         };
 
+             
         if (modalIsOpen) {
+                      
             return (
                 <div>
                     <div className='createNewTripBlur'>
@@ -120,14 +183,15 @@ const Trip = () => {
                             </a>
 
                             <SearchForm
-                                city={city}
+                                city={ city }
                                 handleInputChange_city={handleInputChange_city}
-                                startDate={startDate}
-                                handleInputChange_startDate={handleInputChange_startDate}
-                                endDate={endDate}
-                                handleInputChange_endDate={handleInputChange_endDate}
-                                people={people}
+                                people={ people }
                                 handleInputChange_people={handleInputChange_people}
+                                startDate={ startDate }
+                                handleInputChange_startDate={handleInputChange_startDate}
+                                endDate={ endDate }
+                                handleInputChange_endDate={handleInputChange_endDate}
+                                
                                 handleFormSubmit={handleFormSubmit}
                             />
 
@@ -135,6 +199,7 @@ const Trip = () => {
                                 {listing ? (
                                     <PropertyDetail
                                         list={homes}
+                                        profileId= {id}
                                     handleFormAdd = { handleFormAdd }
                                     />
                                 ) : (
@@ -266,7 +331,9 @@ const Trip = () => {
         }
 
     }
+    
     return (
+        
         
         <>
             <CreateActivity></CreateActivity>
@@ -306,15 +373,17 @@ const Trip = () => {
                         </MenuSideBarItem>
                     </div>
                     <div className='menuMainInfo'>
+                    {data && data.getItineraryDetails && (
                         <div className='menuMainInfoImageContainer'>
                             <img src={miami} className='menuMainInfoImage'></img>
                             <div className='menuMainInfoImageCard'>
-
-                                <h1>Trip To Naples</h1>
-                                <p>From 9/22/2023 To 9/27/2023</p>
+                            
+                                <h1>Trip To {data.getItineraryDetails.location}</h1>
+                                <p>From {data.getItineraryDetails.startDate} To {data.getItineraryDetails.endDate}</p>
 
                             </div>
                         </div>
+                    )}
                         <div className='menuMainInfoItemShaded'>
                             <h1 className='menuMainInfoTitle'>Overview</h1>
                         </div>
@@ -336,8 +405,14 @@ const Trip = () => {
                             <MenuMainOverviewItem
                                 title="Accomodations"
                             >
+                                {data && data.getItineraryDetails && ( 
+                                <div className='tripsContainer border'>
+                                <AirbnbAccommodation accommodation = {data.getItineraryDetails} />
+                                </div>
+                            )}
                                 <button className='addNewAccomodationsButton' onClick={() => { setModalIsOpen((prevState) => !prevState) }}>Add New Accomodations</button>
                                 <button className='addNewAccomodationsButton' onClick={payment}>Pay for Accomodations</button>
+                                
                             </MenuMainOverviewItem>
                         </div>
                         <div className='menuMainInfoItemShaded'>

@@ -18,6 +18,20 @@ function SearchForm(props) {
           />
         </div>
         <div className='modalFormInputContainer'>
+          <label>Number of Guests</label>
+          <input
+            onChange={props.handleInputChange_people}
+            value={props.people}
+            name="people"
+            type="number"
+            min="1" 
+            max="10"
+            className="form-control modalFormInput"
+            placeholder="How Many People"
+            id="people"
+          />
+        </div>
+        <div className='modalFormInputContainer'>
           <label>Start Date</label>
           <input
             onChange={props.handleInputChange_startDate}
@@ -39,20 +53,6 @@ function SearchForm(props) {
             className="form-control modalFormInput"
             placeholder="End Date"
             id="endDate"
-          />
-        </div>
-        <div className='modalFormInputContainer'>
-          <label>Number of Guests</label>
-          <input
-            onChange={props.handleInputChange_people}
-            value={props.people}
-            name="people"
-            type="number"
-            min="1" 
-            max="10"
-            className="form-control modalFormInput"
-            placeholder="How Many People"
-            id="people"
           />
         </div>
         <div className="modalFormInputContainer">

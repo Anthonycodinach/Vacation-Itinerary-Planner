@@ -1,24 +1,29 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+
   type Profile {
     _id: ID
     username: String!
-    email: String!
+    email: String
     password: String!
   }
 
   type Itinerary {
     _id: ID
-    location: String!
+    username: String
+    location: String
     guests: Int
-    startDate: String!
-    endDate: String!
-    airbnbName: String!
-    airbnbCheckInDate: String!
-    airbnbCheckOutDate: String!
-    restaurants: [String]!
-    experiences: [String]!
+    startDate: String
+    endDate: String
+    airbnbId: String
+    airbnbphoto:String
+    airbnbname: String
+    airbnbCheckInDate: String
+    airbnbCheckOutDate: String
+    airbnbguests: Int
+    restaurants: [String]
+    experiences: [String]
   }
 
   type Restaurants {
@@ -48,19 +53,20 @@ const typeDefs = gql`
 
   type Query {
     allProfiles: [Profile]!
-    singleProfile(profileId: ID!): Profile
+    findProfile(username: String!): Profile
     allItineraries: [Itinerary]!
-    singleItinerary(itineraryId: ID!): Itinerary
+    userItinerary(username: String!): [Itinerary]
+    getItineraryDetails(_id: ID!): Itinerary
     restaurantsByLocation(location: String!): [Restaurants]
 
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
   }
 
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(username: String!, password: String!): Auth
     removeProfile: Profile
-    createItinerary(location: String!, startDate: String!, endDate: String!, guests: Int): Itinerary
+    createItinerary(username: String!, location: String!, startDate: String!, endDate: String!, guests: Int): Itinerary
     createRestaurant(name: String!, cuisine: String!, location: String!, reservationDate: String!, reservationTime: String!, guests: Int): Restaurants
     createEx(name: String!, location: String!, date: String!, time: String!, guests: Int): Experiences
     addRestaurantToItinerary(
@@ -72,8 +78,13 @@ const typeDefs = gql`
       exId: ID!
     ): Itinerary
     addAirbnbToItinerary(
-      itineraryId: ID!
-      airbnbName: ID!
+      _id: ID!,
+      airbnbId: String,
+      airbnbname: String,
+      airbnbphoto: String,
+      airbnbCheckInDate: String,
+      airbnbCheckOutDate: String,
+      airbnbguests: Int
     ): Itinerary
     deleteItinerary(itineraryId: ID!): Itinerary
     deleteRestaurant(restaurantId: ID!): Restaurants

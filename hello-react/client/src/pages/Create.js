@@ -2,26 +2,27 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_ITINERARY } from '../utils/mutations';
-
+import Auth from '../utils/auth';
 
 
 const Create = ({ }) => {
   const [location, setLocation] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [guests, setGuests] = useState(1);
+  const [guests, setGuests] = useState();
 
   const [createItinerary, { error }] = useMutation(CREATE_ITINERARY);
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
-    
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const username = Auth.getToken2();
     try {
       const data = await createItinerary({
-        variables: { location: location, startDate: startDate, endDate: endDate, guests: parseInt(guests) },
+        variables: { username: username, location: location, startDate: startDate, endDate: endDate, guests: parseInt(guests) },
       });
-      console.log(data)
+      console.log(data);
+      const token = Auth.getToken();
+      Auth.login(token);
 
       setLocation('');
       setStartDate('');
@@ -78,7 +79,9 @@ const Create = ({ }) => {
             />
           </div>
           <div className="modalFormInputContainer">
-            <button className="modalFormInputButton" type="submit">
+            <button 
+            className="modalFormInputButton" 
+            type="submit">
               Create your perfect trip itinerary
             </button>
           </div>

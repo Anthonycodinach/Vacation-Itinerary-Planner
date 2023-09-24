@@ -11,27 +11,60 @@ import x from './assets/Icons/X.svg'
 
 import Create from '../pages/Create';
 
-function Trip(props) {
+import { useQuery } from '@apollo/client';
+import Auth from '../utils/auth';
+import { GET_USER_ITINERARIES } from '../utils/queries';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+
+const Trip = (props) => {
+    
+    const newItinerary = props.itineraryList;
+
+    if (!props.itineraryList?.length) {
+        return null;
+    }
+
     return (
         <div class="tripsItem">
-            <div class="profileImageContainer">
-                <img class="profileImage zoom" src={props.cityImage}></img>
+            {newItinerary.map((item, index) => ( 
+            <div>
+                <div class="profileImageContainer">
+                <Link to={`/Profile/Trip/${item._id}`}>
+                    <img 
+                    class="profileImage zoom" 
+                    src={miami} 
+                    trip={item._id}
+                    key={`pic-${index}`}
+                    />
+                </Link>
+                </div>
+                <div class="profileTripOverview">
+                    <h1 className='zoom' key={`loc-${index}`}>{item.location} </h1>
+                    <h2 key={`sDate-${index}`}>{item.startDate} </h2>
+                    <p class="profileTripAbout">Add Comments!</p>
+                </div>
             </div>
-            <div class="profileTripOverview">
-                <h1 className='zoom'>{props.city}</h1>
-                <h2>{props.date}</h2>
-                <p class="profileTripAbout">Add Comments!</p>
-            </div>
+            ))}
         </div>
     )
 }
 
-function Profile() {
+const Profile = () => {
+    
+    const username = Auth.getToken2();
+
+        const { data } = useQuery(GET_USER_ITINERARIES, {
+            variables: { username: username },
+        });
+
+        const itineraryList = data?.userItinerary;
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
 
-    function CreateTrip() {
-
+    const CreateTrip = () => {
+        
         if (modalIsOpen) {
             return (
                 <div>
@@ -65,9 +98,9 @@ function Profile() {
                         <img className='profileImage'></img>
                     </div>
                     <div className='profileItem'>
-                        <h1>Anthony</h1>
+                        <h1>{username}</h1>
                         <h2>About me!</h2>
-                        <p>Hi my name is Anthony, I have a cat and I like to code!</p>
+                        <p>Hi {username}, Where you want go Next!</p>
                     </div>
                 </div>
                 <div className='profileCategory border'>
@@ -96,7 +129,8 @@ function Profile() {
 
 
                 <div className='tripsContainer border'>
-                    <Trip city='New York City' cityImage={nyc} date="Jul 20th - Jul 30th"></Trip>
+                    <Trip itineraryList = {itineraryList} 
+                    />
                     <Trip city='Chicago' cityImage={chicago} date="Sep 25th - Sep 27th"></Trip>
                 </div>
 

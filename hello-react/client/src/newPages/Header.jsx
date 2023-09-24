@@ -25,8 +25,8 @@ function Header() {
 
         </NavItem>
         <p className='navSubTitle'>Trips</p>
-        <NavItem className='navItem' link="/profile" icon={profileIcon}></NavItem>
-        <a href="/signup" className='navSubTitle'>Sign Up</a>
+        <NavItem className='navItem' link="/signup" icon={profileIcon}></NavItem>
+        <a className='navSubTitle'>Sign Up</a>
 
       </NavBar>
     </>

@@ -26,7 +26,7 @@ function Footer() {
                     Event Notification Sign Up
                 </h1>
                 <div className="eventNotificationSignUp">
-                    <label for="signUpSearch"></label>
+                    <label htmlFor="signUpSearch"></label>
                     <input type="text" id="signUpSearch" placeholder="Email Address"></input>
                     <button id="signUpButton">Sign Up</button>
                 </div>
