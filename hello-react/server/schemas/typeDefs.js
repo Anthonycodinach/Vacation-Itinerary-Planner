@@ -43,7 +43,7 @@ const typeDefs = gql`
     location: String!
     date: String!
     time: String!
-    guests: Int
+    guests: Int!
   }
 
 
@@ -57,6 +57,8 @@ const typeDefs = gql`
     findProfile(username: String!): Profile
     allItineraries: [Itinerary]!
     userItinerary(username: String!): [Itinerary]
+    userRests: [Restaurants]
+    userExs: [Experiences]
     getItineraryDetails(_id: ID!): Itinerary
     restaurantsByLocation(location: String!): [Restaurants]
 
@@ -69,7 +71,7 @@ const typeDefs = gql`
     removeProfile: Profile
     createItinerary(username: String!, location: String!, startDate: String!, endDate: String!, guests: Int): Itinerary
     createRestaurant(name: String!, cuisine: String!, location: String!, reservationDate: String!, reservationTime: String!, guests: Int): Restaurants
-    createEx(name: String!, location: String!, date: String!, time: String!, guests: Int): Experiences
+    createEx(name: String!, location: String!, date: String!, time: String!, guests: Int!): Experiences
     addRestaurantToItinerary(
       itineraryId: ID!
       restaurantId: ID!

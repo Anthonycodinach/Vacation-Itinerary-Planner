@@ -49,14 +49,25 @@ export const CREATE_RESTAURANT = gql`
   mutation createRestaurant($name: String!, $cuisine: String!, $location: String!, $reservationDate: String!, $reservationTime: String!, $guests: Int!) {
     createRestaurant(name: $name, cuisine: $cuisine, location: $location, reservationDate: $reservationDate, reservationTime: $reservationTime, guests: $guests) {
       _id
+      name
+      cuisine
+      location
+      reservationDate
+      reservationTime
+      guests
     }
   }
 `;
 
 export const CREATE_EX = gql`
-  mutation createEx($name: String!, $cuisine: String!, $location: String!, $date: String!, $time: String!, $guests: Int!) {
+  mutation createEx($name: String!, $location: String!, $date: String!, $time: String!, $guests: Int!) {
     createEx(name: $name, location: $location, date: $date, time: $time, guests: $guests) {
       _id
+      name
+      location
+      date
+      time
+      guests
     }
   }
 `;
@@ -109,3 +120,4 @@ export const DELETE_EX = gql`
     }
   }
 `;
+

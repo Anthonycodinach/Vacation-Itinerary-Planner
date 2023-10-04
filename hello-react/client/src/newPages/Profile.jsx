@@ -101,7 +101,7 @@ const Profile = () => {
                     <div className='profileItem'>
                         <h1>{username}</h1>
                         <h2>About me!</h2>
-                        <p>Hi {username}, Where you want go Next!</p>
+                        <p>Hi {username}, where do you want to go next?</p>
                     </div>
                 </div>
                 <div className='profileCategory border'>
@@ -111,11 +111,11 @@ const Profile = () => {
                     </div>
                     <div class="profileItem">
                         <h2>Favorite Foods</h2>
-                        <p>Indian</p>
+                        <p>Italian</p>
                     </div>
                     <div class="profileItem">
                         <h2>Birthday</h2>
-                        <p>Sometime</p>
+                        <p>N/A</p>
                     </div>
                     <div class="profileItem">
                         <h2>Total Trips</h2>

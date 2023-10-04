@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { ADD_EX_TO_ITINERARY } from '../utils/mutations';
-import Auth from '../../utils/auth';
+import { ADD_EX_TO_ITINERARY, CREATE_EX } from '../utils/mutations';
+import Auth from '../utils/auth';
 
-const Create = ({ }) => {
+const CreateEx = ({ }) => {
   const [location, setLocation] = useState('');
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [guests, setGuests] = useState(0);
 
-  const [createEx, { error }] = useMutation(ADD_EX_TO_ITINERARY);
+  const [createEx, options] = useMutation(CREATE_EX);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -26,7 +26,7 @@ const Create = ({ }) => {
       setName('');
       setDate('');
       setTime('');
-      setGuests(0);
+      setGuests(1);
     } catch (err) {
       console.error(err);
     }
@@ -34,65 +34,79 @@ const Create = ({ }) => {
 
   return (
     <div>
-      <h4> Add an experince to your trip itinerary!</h4>
+            <h4>Add an experience to your trip itinerary!</h4>
 
-      {Auth.loggedIn() ? (
-        <form
-          className="flex-row justify-center justify-space-between-md align-center"
-          onSubmit={handleFormSubmit}
-        >
-          <div className="col-12 col-lg-9">
+           {/* {Auth.loggedIn() ? ( */}
+      <form
+        className="modalForm"
+        onSubmit={handleFormSubmit}
+      >
+        <div className="modalFormContainer">
+          <div className='modalFormInputContainer'>
+            <label> Activity Title</label>
             <input
-              placeholder="Where you headed?"
               value={name}
-              className="form-input w-100"
+              className="modalFormInput"
               onChange={(event) => setName(event.target.value)}
             />
-             <input
-              placeholder="When does it start?"
-              value={location}
-              className="form-input w-100"
-              onChange={(event) => setLocation(event.target.value)}
-            />
-             <input
-              placeholder="When does it end?"
-              value={date}
-              className="form-input w-100"
-              onChange={(event) => setDate(event.target.value)}
-            />
-             <input
-              placeholder="When does it end?"
-              value={time}
-              className="form-input w-100"
-              onChange={(event) => setTime(event.target.value)}
-            />
-             <input
-              placeholder="Just you, or do you not have any friends?"
+          </div>
+          <div className='modalFormInputContainer'>
+            <label> Guests </label>
+            <input
+              type='number'
               value={guests}
-              className="form-input w-100"
+              className="modalFormInput"
               onChange={(event) => setGuests(event.target.value)}
             />
           </div>
-
-          <div className="col-12 col-lg-3">
-            <button className="btn btn-info btn-block py-3" type="submit">
-              Add experince!
+          <div className='modalFormInputContainer'>
+            <label>Activity Date</label>
+            <input
+              type='date'
+              value={date}
+              className="modalFormInput"
+              onChange={(event) => setDate(event.target.value)}
+            />
+          </div>
+          <div className='modalFormInputContainer'>
+            <label>Activity Time</label>
+            <input
+              type='time'
+              value={time}
+              className="modalFormInput"
+              onChange={(event) => setTime(event.target.value)}
+            />
+          </div>
+            <div className='modalFormInputContainer'>
+            <label>Location</label>
+            <input
+              value={location}
+              className="modalFormInput"
+              onChange={(event) => setLocation(event.target.value)}
+            />
+          </div>
+          <div className="modalFormInputContainer">
+            <button 
+            className="modalFormInputButton" 
+            type="submit">
+              Add to trip
             </button>
           </div>
-          {error && (
-            <div className="col-12 my-3 bg-danger text-white p-3">
-              {error.message}
-            </div>
-          )}
-        </form>
-      ) : (
+        </div>
+        {/* {error && (
+          <div className="">
+            {error.message}
+          </div>
+        )} */}
+      </form>
+      {/* ) : (
         <p>
-          You need to be logged in to add experinces to your trip itinerary. Please{' '}
+          You need to be logged in to create an itinerary. Please{' '}
           <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
         </p>
-      )}
+      )} */}
     </div>
   );
 };
 
-export default Create;
+export default CreateEx;
