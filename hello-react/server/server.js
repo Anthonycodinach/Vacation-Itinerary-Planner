@@ -23,11 +23,11 @@ app.use(express.json());
 //   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 // });
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "../client/public"));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "public", "index.html"))
-})
+  res.sendFile(path.join(__dirname, "../client/public", "../client/public/index.html"))
+});
 
 
 // Create a new instance of an Apollo server with the GraphQL schema
