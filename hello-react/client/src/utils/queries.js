@@ -53,6 +53,34 @@ export const GET_USER_ITINERARIES = gql`
   }
 `;
 
+export const GET_USER_REST = gql`
+  query userRests {
+    userRests {
+    _id
+    name
+    cuisine
+    location
+    reservationTime
+    reservationDate
+    guests
+    }
+  }
+`;
+
+export const GET_USER_EXS = gql`
+  query userExs {
+    userExs {
+    _id
+    name
+    location
+    time
+    guests
+    date
+    }
+  }
+`;
+
+
 export const GET_USER_PROFILE = gql`
   query getUserProfile($userId: ID!) {
     userProfile(userId: $userId) {
@@ -81,6 +109,20 @@ query getItineraryDetails($_id: ID!) {
     airbnbprice
     restaurants
     experiences
+    }
+  }
+`;
+
+export const GET_RESTAURANT_DETAILS = gql`
+query getRestaurantDetails($_id: ID!) {
+  getRestaurantDetails(_id: $_id) {
+    _id
+    name
+    location
+    guests
+    reservationDate
+    reservationTime
+    cuisine
     }
   }
 `;

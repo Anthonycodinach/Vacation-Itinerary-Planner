@@ -12,8 +12,11 @@ import SearchForm from '../components/Search/SearchForm';
 import { loadStripe } from '@stripe/stripe-js';
 import { useMutation, gql } from '@apollo/client';
 import {ADD_AIRBNB_TO_ITINERARY} from '../../src/utils/mutations'
-import { GET_ITINERARY_DETAILS } from '../utils/queries';
+import { GET_ITINERARY_DETAILS, GET_RESTAURANT_DETAILS, GET_USER_REST } from '../utils/queries';
 import { useQuery } from '@apollo/client';
+import CreateNewRestaurant from '../pages/NewRestaurant'
+import CreateEx from '../pages/NewEx'
+import RestaurantReservation from '../components/Restaurant'
 
 const AirbnbAccommodation = (props) => {
     
@@ -27,9 +30,9 @@ const AirbnbAccommodation = (props) => {
     return (
         <div class="tripsItem">
             <div>
-                <div class="profileImageContainer">
+                <div className="profileImageContainer">
                     <img 
-                    class="profileImage zoom" 
+                    className="profileImage zoom" 
                     src={airbnbItem.airbnbphoto}
                     key={(airbnbItem.airbnbId)}
                     />
@@ -46,13 +49,11 @@ const AirbnbAccommodation = (props) => {
 }
 
 
-
 const Trip = () => {
-
 
     const { id } = useParams();
     //console.log('Itinerary '+id);
-    const { data } = useQuery(GET_ITINERARY_DETAILS, {
+    const { data , loading } = useQuery(GET_ITINERARY_DETAILS, {
         variables: { _id: id },
     })
 
@@ -60,6 +61,10 @@ const Trip = () => {
     const [activityModalIsOpen, setActivityModalIsOpen] = useState(false)
     const [restaurantModalIsOpen, setRestaurantModalIsOpen] = useState(false)
     const stripePromise = loadStripe("pk_test_51Nr12cG3HMx6NAFGYTqkC7ydc1MpCyK3OHCJZdsxYWQks9aYqneBjhpNKxxifgY2ZbJIdcNHDgfTG0uMisXWM4zS008wp3C3xw");
+
+    if (loading) {
+        return <h1> Loading... </h1>
+    }
 
     const payment = async (event) => {
         
@@ -231,6 +236,7 @@ const Trip = () => {
                             <a className='closeButton' onClick={() => { setActivityModalIsOpen((prevState) => !prevState) }}>
                                 <img src={x} className='closeButtonImage'></img>
                             </a>
+                            <CreateEx></CreateEx>
                         </div>
                     </div>
                 </div>
@@ -256,6 +262,7 @@ const Trip = () => {
                             <a className='closeButton' onClick={() => { setRestaurantModalIsOpen((prevState) => !prevState) }}>
                                 <img src={x} className='closeButtonImage'></img>
                             </a>
+                            <CreateNewRestaurant></CreateNewRestaurant>
                         </div>
                     </div>
                 </div>
@@ -391,6 +398,9 @@ const Trip = () => {
                             <MenuMainOverviewItem
                                 title="Restaurants"
                             >
+                                 <div className='tripsContainer border'>
+                                <RestaurantReservation/>
+                                </div>
                                 <button className='addNewAccomodationsButton' onClick={() => { setRestaurantModalIsOpen((prevState) => !prevState) }}>Add New Restaurants</button>
                             </MenuMainOverviewItem>
                         </div>

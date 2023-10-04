@@ -16,6 +16,12 @@ const resolvers = {
     userItinerary: async (parent, { username }) => {
       return Itinerary.find({ username: username });
     },
+    userRests: async () => {
+      return Restaurants.find();
+    },
+    userExs: async () => {
+      return Experiences.find();
+    },
     getItineraryDetails: async (parent, { _id }) => {
       return Itinerary.findOne({ _id: _id });
     },
